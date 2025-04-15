@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
 
 :root {
   --mirage-dark: #16222a;
@@ -16,6 +17,14 @@
 
   --color-heading: var(--white);
   --color-text: var(--white);
+  --color-logo: var(--mirage-superlight);
+  --color-logo-hover: var(--white);
+
+  --font-logo: 'Marck Script', cursive;
+  --font-heading: 'Sofia Sans Condensed', sans-serif;
+  --font-text: 'Sofia Sans Condensed', sans-serif;
+
+  --drop-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 *,
@@ -29,12 +38,12 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background);
+  background: linear-gradient(to bottom, var(--mirage-light), var(--mirage-dark));
   transition:
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family: 'Sofia Sans Condensed', sans-serif;
+  font-family: var(--font-text);
   font-size: 16px;
   line-height: 1.5;
   text-rendering: optimizeLegibility;

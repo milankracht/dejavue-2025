@@ -1,0 +1,22 @@
+@use '@/assets/styles/base.scss' as base;
+@use '@/assets/styles/mixins.scss' as mixins;
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+@include mixins.bp-md {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+}
