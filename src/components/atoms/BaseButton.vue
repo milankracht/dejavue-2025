@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, useSlots } from 'vue';
+import { GLOBAL } from '@/utils/constants';
 import Icon from '@/components/atoms/BaseIcon.vue';
 
 const props = defineProps({
@@ -16,7 +17,19 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  iconPosition: {
+    type: String,
+    default: 'right',
+    validator: (value: string) => ['left', 'right'].includes(value),
+  },
+  handleClick: {
+    type: Function,
+    default: () => {},
+  },
 });
+
+const slots = useSlots();
+const hasSlotContent = !!slots.default;
 </script>
 
 <template>
@@ -24,27 +37,45 @@ const props = defineProps({
     type="button"
     :class="['btn', `btn--${props.type}`, { 'btn--disabled': props.disabled }]"
     :disabled="props.disabled"
-    @click="$emit('click')"
+    @click="$emit('handleClick')"
   >
-    <slot />
-    <Icon v-if="props.icon" :icon="props.icon" size="24" color="#ffffff" />
+    <Icon
+      v-if="props.icon && props.iconPosition === 'left'"
+      :icon="props.icon"
+      size="24"
+      :color="GLOBAL.COLORS.WHITE"
+    />
+    <span v-if="hasSlotContent" class="btn__label">
+      <slot />
+    </span>
+    <Icon
+      v-if="props.icon && props.iconPosition === 'right'"
+      :icon="props.icon"
+      size="24"
+      :color="GLOBAL.COLORS.WHITE"
+    />
   </button>
 </template>
 
 <style scoped lang="scss">
 .btn {
   display: inline-flex;
-  gap: 0.5rem;
+  gap: 0.25rem;
   align-items: center;
   justify-content: center;
-  padding: 0.625rem 1rem;
-  font-size: 1.125rem;
+  padding: 0.625rem 0.75rem;
+  font-family: var(--font-text);
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.5rem;
   border-radius: 1.5rem;
   border: 2px solid var(--white);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: var(--transition-out);
+
+  &:hover {
+    transition: var(--transition-in);
+  }
 
   &--primary {
     background-color: var(--white);
@@ -66,8 +97,9 @@ const props = defineProps({
 
   &--tertiary {
     padding: 0.625rem;
+    margin: 2px;
     background-color: transparent;
-    border-color: transparent;
+    border: none;
     color: var(--white);
 
     &:hover {
@@ -78,6 +110,11 @@ const props = defineProps({
   &--disabled {
     cursor: not-allowed;
     opacity: 0.5;
+  }
+
+  .btn__label {
+    padding: 0 0.5rem;
+    font-weight: 700;
   }
 }
 </style>

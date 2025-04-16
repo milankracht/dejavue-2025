@@ -6,17 +6,17 @@ import { GLOBAL } from '@/utils/constants';
 
 const props = defineProps({
   rating: {
-    type: Number,
+    type: [Number, null],
     required: true,
   },
 });
 </script>
 
 <template>
-  <div class="rating">
+  <div v-if="props.rating" class="star-rating">
     <Icon icon="star" :size="16" :color="GLOBAL.COLORS.YELLOW" />
-    <span
-      ><strong>{{ props.rating }}</strong
+    <span>
+      <strong>{{ props.rating }}</strong
       >/10</span
     >
   </div>
@@ -25,7 +25,7 @@ const props = defineProps({
 <style scoped lang="scss">
 @use '@/assets/styles/mixins' as mixins;
 
-.rating {
+.star-rating {
   display: flex;
   flex-direction: row;
   justify-content: center;

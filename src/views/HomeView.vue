@@ -2,7 +2,7 @@
 import showStore from '@/store/show';
 import { onMounted } from 'vue';
 
-import Slider from '@/components/organisms/PosterSlider.vue';
+import Slider from '@/components/organisms/ShowSlider.vue';
 
 onMounted(() => {
   showStore.loadShows();

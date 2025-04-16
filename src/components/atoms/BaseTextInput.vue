@@ -1,7 +1,43 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { defineProps, ref, watch } from 'vue';
+
+const emit = defineEmits(['handleChange']);
+
+const props = defineProps({
+  value: {
+    type: String,
+    default: '',
+  },
+});
+
+const inputValue = ref(props.value);
+
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const debouncedEmit = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  inputValue.value = target.value;
+
+  if (debounceTimeout) {
+    clearTimeout(debounceTimeout);
+  }
+
+  debounceTimeout = setTimeout(() => {
+    emit('handleChange', inputValue.value);
+  }, 300);
+};
+
+watch(
+  () => props.value,
+  (newVal) => {
+    inputValue.value = newVal;
+  },
+  { immediate: true },
+);
+</script>
 
 <template>
-  <input type="text" class="text-input" />
+  <input type="text" class="text-input" v-model="inputValue" @input="debouncedEmit" />
 </template>
 
 <style scoped lang="scss">

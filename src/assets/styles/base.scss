@@ -25,6 +25,9 @@
   --font-text: 'Sofia Sans Condensed', sans-serif;
 
   --drop-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  --transition-in: all 0.3s ease-in-out;
+  --transition-out: all 0.15s ease-in-out;
 }
 
 *,
@@ -39,9 +42,6 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: linear-gradient(150deg, var(--mirage-light), var(--mirage-dark));
-  transition:
-    color 0.5s,
-    background-color 0.5s;
   line-height: 1.6;
   font-family: var(--font-text);
   font-size: 16px;
@@ -49,4 +49,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  font-size: 1.25rem;
+  text-align: left;
 }

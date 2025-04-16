@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import Logo from '@/components/molecules/DvLogo.vue';
 import SearchBar from '@/components/molecules/SearchBar.vue';
-import Button from '../atoms/BaseButton.vue';
 </script>
 
 <template>
   <header>
-    <Logo />
-    <SearchBar>
-      <span>Test</span>
-    </SearchBar>
-    <div class="header-right"><Button type="tertiary" icon="search" /></div>
+    <div class="header-left">
+      <Logo />
+    </div>
+    <div class="header-center">
+      <SearchBar />
+    </div>
+    <div class="header-right"></div>
   </header>
 </template>
 
@@ -21,7 +22,7 @@ header {
   position: fixed;
   z-index: 10;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 0;
   left: 0;
   top: 0;
   width: 100%;
@@ -29,6 +30,19 @@ header {
   padding: 0.25rem 1rem;
   background-color: var(--mirage-medium);
   box-shadow: var(--drop-shadow);
+  transition: var(--transition-out);
+
+  .header-left {
+    padding: 0.5rem 0;
+
+    @include mixins.bp-md {
+      padding: 0.25rem 0;
+    }
+  }
+
+  .header-center {
+    text-align: right;
+  }
 
   @include mixins.bp-md {
     height: 5rem;
@@ -36,14 +50,8 @@ header {
     grid-template-columns: 2fr 3fr 2fr;
   }
 
-  .header-right {
-    text-align: right;
-
-    > * {
-      @include mixins.bp-md {
-        display: none;
-      }
-    }
+  @include mixins.bp-lg {
+    grid-template-columns: 1fr 52rem 1fr;
   }
 }
 </style>

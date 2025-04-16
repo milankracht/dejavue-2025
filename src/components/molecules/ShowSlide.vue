@@ -21,12 +21,12 @@ const imageUrl = computed(() => props.show.image?.medium || '/poster-placeholder
 </script>
 
 <template>
-  <div class="slide">
-    <div class="slide__poster" ref="el">
+  <div class="show-slide">
+    <div class="show-slide__poster" ref="el">
       <Image v-if="isVisible" :src="imageUrl" :alt="`${props.show.name} Poster`" />
       <PosterPlaceholder v-else />
     </div>
-    <div class="slide__heading">
+    <div class="show-slide__heading">
       <Heading size="md">{{ props.show.name }}</Heading>
       <Rating :rating="props.show.rating.average" />
     </div>
@@ -36,7 +36,7 @@ const imageUrl = computed(() => props.show.image?.medium || '/poster-placeholder
 <style scoped lang="scss">
 @use '@/assets/styles/mixins' as mixins;
 
-.slide {
+.show-slide {
   display: flex;
   flex-direction: column;
   width: 10rem;

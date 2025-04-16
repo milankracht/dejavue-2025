@@ -16,7 +16,7 @@ export interface Show {
     days: string[];
   };
   rating: {
-    average: number;
+    average: number | null;
   };
   weight: number;
   network: {
@@ -51,4 +51,9 @@ export interface Show {
       name?: string;
     };
   };
+}
+
+export interface SearchResult {
+  score: number;
+  show: Show;
 }

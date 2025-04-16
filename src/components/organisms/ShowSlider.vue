@@ -5,7 +5,7 @@ import showStore from '@/store/show';
 import { GLOBAL } from '@/utils/constants';
 
 import Heading from '@/components/atoms/BaseHeading.vue';
-import Slide from '@/components/molecules/PosterSlide.vue';
+import Slide from '@/components/molecules/ShowSlide.vue';
 import Icon from '../atoms/BaseIcon.vue';
 
 const props = defineProps({
@@ -75,23 +75,23 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="slider">
-    <div class="slider__heading">
+  <div class="show-slider">
+    <div class="show-slider__heading">
       <Heading size="xl">{{ props.genre }}</Heading>
     </div>
-    <div :id="`${props.genre}__scrollable`" class="slider__scrollable">
+    <div :id="`${props.genre}__scrollable`" class="show-slider__scrollable">
       <Slide v-for="show in showsByGenre" :key="show.id" :show="show" />
     </div>
     <button
       v-if="sliderButtonLeftIsVisible"
-      class="slider__button-left"
+      class="show-slider__button-left"
       @click="() => scrollHandler('left')"
     >
       <Icon icon="chevron-round-left" size="64" :color="GLOBAL.COLORS.WHITE" />
     </button>
     <button
       v-if="sliderButtonRightIsVisible"
-      class="slider__button-right"
+      class="show-slider__button-right"
       @click="() => scrollHandler('right')"
     >
       <Icon icon="chevron-round-right" size="64" :color="GLOBAL.COLORS.WHITE" />
@@ -102,7 +102,7 @@ onUnmounted(() => {
 <style scoped lang="scss">
 @use '@/assets/styles/mixins' as mixins;
 
-.slider {
+.show-slider {
   position: relative;
   width: 100vw;
 
@@ -111,11 +111,11 @@ onUnmounted(() => {
   }
 }
 
-.slider__heading {
+.show-slider__heading {
   padding: 0.5rem 1.25rem;
 }
 
-.slider__scrollable {
+.show-slider__scrollable {
   width: 100vw;
   display: flex;
   flex-direction: row;
@@ -127,8 +127,8 @@ onUnmounted(() => {
   scroll-padding-left: 0.75rem;
 }
 
-.slider__button-left,
-.slider__button-right {
+.show-slider__button-left,
+.show-slider__button-right {
   position: absolute;
   display: none;
   top: calc(50% - 2rem);
@@ -139,22 +139,22 @@ onUnmounted(() => {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   opacity: 0.5;
-  transition: all 0.15s ease;
+  transition: var(--transition-out);
 
   &:hover {
     transform: scale(1.1);
     opacity: 0.75;
-    transition: all 0.3s ease;
+    transition: var(--transition-in);
   }
 
   @include mixins.bp-md {
     display: block;
   }
 }
-.slider__button-left {
+.show-slider__button-left {
   left: 0;
 }
-.slider__button-right {
+.show-slider__button-right {
   right: 0.5rem;
 }
 </style>

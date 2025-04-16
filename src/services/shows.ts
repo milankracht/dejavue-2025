@@ -12,3 +12,10 @@ export async function fetchShowById(id: number) {
   if (!response.ok) throw new Error(`Failed to fetch show with ID ${id}`);
   return response.json();
 }
+
+export async function searchShows(entry: string) {
+  const query = entry.replace(/[^a-zA-Z0-9\s]/g, '');
+  const response = await fetch(`${BASE_URL}/search/shows?q=${query}`);
+  if (!response.ok) throw new Error(`Failed to search shows with search string ${query}`);
+  return response.json();
+}
