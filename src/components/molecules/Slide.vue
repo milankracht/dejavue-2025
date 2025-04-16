@@ -1,22 +1,34 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
+import type { Show } from '@/types';
+import { useLazyImage } from '@/composables/useLazyImage';
+
+const { isVisible, el } = useLazyImage();
 
 import Heading from '@/components/atoms/Heading.vue';
 import Image from '@/components/atoms/Image.vue';
+import PosterPlaceholder from './PosterPlaceholder.vue';
 import Rating from '../molecules/Rating.vue';
+
+const props = defineProps({
+  show: {
+    type: Object as () => Show,
+    required: true,
+  },
+});
+
+const imageUrl = computed(() => props.show.image?.medium || '/poster-placeholder.png');
 </script>
 
 <template>
   <div class="slide">
-    <div class="slide__poster">
-      <Image
-        src="https://static.tvmaze.com/uploads/images/original_untouched/120/302148.jpg"
-        alt="Placeholder image"
-      />
+    <div class="slide__poster" ref="el">
+      <Image v-if="isVisible" :src="imageUrl" :alt="`${props.show.name} Poster`" />
+      <PosterPlaceholder v-else />
     </div>
     <div class="slide__heading">
-      <Heading size="md">Heading</Heading>
-      <Rating :rating="4.5" />
+      <Heading size="md">{{ props.show.name }}</Heading>
+      <Rating :rating="props.show.rating.average" />
     </div>
   </div>
 </template>
@@ -27,6 +39,12 @@ import Rating from '../molecules/Rating.vue';
 .slide {
   display: flex;
   flex-direction: column;
+  width: 10rem;
+  scroll-snap-align: start;
+
+  @include mixins.bp-md {
+    width: 12.5rem;
+  }
 
   &__poster {
     width: 10rem;
@@ -44,7 +62,12 @@ import Rating from '../molecules/Rating.vue';
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 1rem;
+
+    > :first-child {
+      max-width: calc(100% - 2.5rem);
+      @include mixins.ellipsis;
+    }
   }
 }
 </style>

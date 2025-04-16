@@ -3,12 +3,22 @@ import { defineProps } from 'vue';
 
 import Icon from '../atoms/Icon.vue';
 import { GLOBAL } from '@/utils/constants';
+
+const props = defineProps({
+  rating: {
+    type: Number,
+    required: true,
+  },
+});
 </script>
 
 <template>
   <div class="rating">
     <Icon icon="star" :size="16" :color="GLOBAL.COLORS.YELLOW" />
-    <span><strong>9.4</strong>/10</span>
+    <span
+      ><strong>{{ props.rating }}</strong
+      >/10</span
+    >
   </div>
 </template>
 

@@ -6,7 +6,6 @@ const props = defineProps<{
   alt?: string;
   width?: number;
   height?: number;
-  class?: string;
 }>();
 const { src, alt } = props;
 </script>
@@ -16,8 +15,6 @@ const { src, alt } = props;
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/styles/mixins' as mixins;
-
 img {
   object-fit: cover;
 }

@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import Slide from '@/components/molecules/Slide.vue';
+import showStore from '@/store/show';
+import { onMounted } from 'vue';
+
+import Slider from '@/components/organisms/Slider.vue';
+
+onMounted(() => {
+  showStore.loadShows();
+});
 </script>
 
 <template>
   <main>
-    <h1>Home</h1>
-    <Slide />
+    <Slider v-for="genre in showStore.state.genres" :key="genre" :genre="genre" />
   </main>
 </template>
