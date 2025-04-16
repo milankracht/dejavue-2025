@@ -5,10 +5,10 @@ import { useLazyImage } from '@/composables/useLazyImage';
 
 const { isVisible, el } = useLazyImage();
 
-import Heading from '@/components/atoms/Heading.vue';
-import Image from '@/components/atoms/Image.vue';
+import Heading from '@/components/atoms/BaseHeading.vue';
+import Image from '@/components/atoms/BaseImage.vue';
 import PosterPlaceholder from './PosterPlaceholder.vue';
-import Rating from '../molecules/Rating.vue';
+import Rating from './StarRating.vue';
 
 const props = defineProps({
   show: {

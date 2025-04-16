@@ -4,9 +4,9 @@ import showStore from '@/store/show';
 
 import { GLOBAL } from '@/utils/constants';
 
-import Heading from '@/components/atoms/Heading.vue';
-import Slide from '@/components/molecules/Slide.vue';
-import Icon from '../atoms/Icon.vue';
+import Heading from '@/components/atoms/BaseHeading.vue';
+import Slide from '@/components/molecules/PosterSlide.vue';
+import Icon from '../atoms/BaseIcon.vue';
 
 const props = defineProps({
   genre: {

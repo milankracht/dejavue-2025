@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 
-import Icon from '../atoms/Icon.vue';
+import Icon from '../atoms/BaseIcon.vue';
 import { GLOBAL } from '@/utils/constants';
 
 const props = defineProps({

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TextInput from '../atoms/TextInput.vue';
-import Icon from '../atoms/Icon.vue';
+import TextInput from '../atoms/BaseTextInput.vue';
+import Icon from '../atoms/BaseIcon.vue';
 </script>
 
 <template>

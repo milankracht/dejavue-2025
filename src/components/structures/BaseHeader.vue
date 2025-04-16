@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Logo from '@/components/atoms/Logo.vue';
+import Logo from '@/components/molecules/DvLogo.vue';
 import SearchBar from '@/components/molecules/SearchBar.vue';
-import Btn from '../atoms/Btn.vue';
+import Button from '../atoms/BaseButton.vue';
 </script>
 
 <template>
@@ -10,7 +10,7 @@ import Btn from '../atoms/Btn.vue';
     <SearchBar>
       <span>Test</span>
     </SearchBar>
-    <div class="header-right"><Btn type="tertiary" icon="search" /></div>
+    <div class="header-right"><Button type="tertiary" icon="search" /></div>
   </header>
 </template>
 

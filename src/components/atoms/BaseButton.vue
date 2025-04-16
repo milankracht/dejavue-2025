@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import Icon from '@/components/atoms/Icon.vue';
+import Icon from '@/components/atoms/BaseIcon.vue';
 
 const props = defineProps({
   type: {
