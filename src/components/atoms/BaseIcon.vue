@@ -21,7 +21,9 @@ const icons = import.meta.glob('@/assets/icons/*.svg');
 const iconComponent = computed(() => {
   const path = `/src/assets/icons/${props.icon}.svg`;
   if (icons[path]) {
-    return defineAsyncComponent(icons[path]);
+    return defineAsyncComponent(
+      () => icons[path]() as Promise<{ default: import('vue').Component }>,
+    );
   } else {
     console.warn(`Icon not found: ${props.icon}`);
     return null;

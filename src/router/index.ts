@@ -29,7 +29,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const nav = useNavigationHistory();
 
-  const lastPath: string = nav.last();
+  const lastPath: string = nav.last().path?.toString() || '/';
 
   if (to.fullPath === lastPath) {
     nav.pop();

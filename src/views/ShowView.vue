@@ -50,7 +50,7 @@ const listData = computed(() => {
 });
 
 const toPreviousView = () => {
-  const last = nav.last();
+  const last = nav.last()?.path?.toString() || '/';
   router.push(last);
 };
 

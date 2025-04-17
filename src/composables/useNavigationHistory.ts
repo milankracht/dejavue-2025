@@ -13,7 +13,7 @@ export function useNavigationHistory() {
   }
 
   function last() {
-    return navigationStack.value[navigationStack.value.length - 1];
+    return navigationStack.value[navigationStack.value.length - 1] || '/';
   }
 
   return {
