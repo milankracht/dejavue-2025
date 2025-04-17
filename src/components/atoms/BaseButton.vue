@@ -58,6 +58,8 @@ const hasSlotContent = !!slots.default;
 </template>
 
 <style scoped lang="scss">
+@use '@/assets/styles/mixins' as mixins;
+
 .btn {
   display: inline-flex;
   gap: 0.25rem;
@@ -99,7 +101,8 @@ const hasSlotContent = !!slots.default;
   }
 
   &--tertiary {
-    padding: 0.625rem;
+    height: 2.5rem;
+    padding: 0.5rem;
     margin: 2px;
     background-color: transparent;
     border: none;
@@ -107,6 +110,11 @@ const hasSlotContent = !!slots.default;
 
     &:hover {
       background-color: var(--mirage-light);
+    }
+
+    @include mixins.bp-md {
+      height: 2.75rem;
+      padding: 0.625rem;
     }
   }
 

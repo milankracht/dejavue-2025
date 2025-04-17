@@ -12,14 +12,13 @@ import { RouterLink } from 'vue-router';
 .logo,
 .logo:visited {
   font-family: var(--font-logo);
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.5rem;
   color: var(--color-logo);
   text-decoration: none;
-  line-height: 1;
+  line-height: 1.125;
 
   @include mixins.bp-md {
-    font-size: 3.5rem;
+    font-size: 3rem;
   }
 }
 

@@ -23,7 +23,7 @@ const imageUrl = computed(() => props.show.image?.medium || '/poster-placeholder
 
 <template>
   <div class="show-slide">
-    <RouterLink :to="`/show/${props.show.id}`">
+    <RouterLink :to="`/show/${props.show.id}`" :tabindex="isVisible ? 0 : -1">
       <div class="show-slide__poster" ref="el">
         <Image v-if="isVisible" :src="imageUrl" :alt="`${props.show.name} Poster`" />
         <PosterPlaceholder v-else />
