@@ -3,12 +3,15 @@ import { onMounted, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { searchShows } from '@/services/shows';
 import type { SearchResult } from '@/types';
+import { useNavigationHistory } from '@/composables/useNavigationHistory';
 
+import Heading from '@/components/atoms/BaseHeading.vue';
 import Button from '@/components/atoms/BaseButton.vue';
 import Slide from '@/components/molecules/ShowSlide.vue';
 
 const route = useRoute();
-const $router = useRouter();
+const router = useRouter();
+const nav = useNavigationHistory();
 
 const state = reactive<{
   results: SearchResult[];
@@ -17,8 +20,8 @@ const state = reactive<{
 });
 
 const toPreviousView = () => {
-  route.query.q = '';
-  $router.push({ name: 'home' });
+  const last = nav.last();
+  router.push(last);
 };
 
 const executeSearch = (query: string) => {
@@ -65,12 +68,15 @@ onMounted(() => {
   <main>
     <div class="search">
       <div class="search__header">
+        <Heading size="xxl"
+          >Results for <span>{{ route.query.q }}</span></Heading
+        >
         <Button
-          type="secondary"
+          type="tertiary"
           icon="chevron-round-left"
           icon-position="left"
           @click="toPreviousView"
-          >Back to home</Button
+          >Back</Button
         >
       </div>
 
@@ -85,15 +91,22 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+@use '@/assets/styles/mixins' as mixins;
+
 .search {
   position: relative;
   width: 100%;
-  max-width: 53rem;
+  max-width: 55rem;
   margin: 0 auto;
+  padding: 0 1rem;
 
   &__header {
-    display: block;
-    padding: 0 0.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+
+    @include mixins.bp-md {
+      padding-bottom: 1rem;
+    }
   }
 
   &__results {
@@ -102,6 +115,7 @@ onMounted(() => {
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.75rem;
+    padding: 1rem 0;
   }
 }
 </style>

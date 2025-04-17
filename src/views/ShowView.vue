@@ -5,6 +5,7 @@ import { fetchShowById } from '@/services/shows';
 import type { Show } from '@/types';
 import { readableDate, hyperlink } from '@/utils/helper';
 import DOMPurify from 'dompurify';
+import { useNavigationHistory } from '@/composables/useNavigationHistory';
 
 import Heading from '@/components/atoms/BaseHeading.vue';
 import Button from '@/components/atoms/BaseButton.vue';
@@ -15,6 +16,7 @@ import DataList from '@/components/organisms/DataList.vue';
 
 const route = useRoute();
 const router = useRouter();
+const nav = useNavigationHistory();
 const showId = route.params.id as string;
 
 const showDetails = ref<Show | null>(null);
@@ -47,9 +49,9 @@ const listData = computed(() => {
   ];
 });
 
-const close = () => {
-  route.query.q = '';
-  router.push({ name: 'home' });
+const toPreviousView = () => {
+  const last = nav.last();
+  router.push(last);
 };
 
 onMounted(async () => {
@@ -62,7 +64,13 @@ onMounted(async () => {
     <div class="show">
       <div class="show__header">
         <Heading size="xxl">{{ showDetails?.name || `Show could not be loaded` }}</Heading>
-        <Button type="secondary" icon="close" icon-position="right" @click="close">Close</Button>
+        <Button
+          type="tertiary"
+          icon="chevron-round-left"
+          icon-position="left"
+          @click="toPreviousView"
+          >Back</Button
+        >
       </div>
       <div class="show__content">
         <div class="show__image">
@@ -95,15 +103,13 @@ onMounted(async () => {
 .show {
   position: relative;
   width: 100%;
-  max-width: 53rem;
+  max-width: 55rem;
   margin: 0 auto 2rem;
   padding: 0 1rem;
 
   &__header {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
 
     @include mixins.bp-md {
       padding-bottom: 1rem;
