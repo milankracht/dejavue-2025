@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps, computed } from 'vue';
+import { RouterLink } from 'vue-router';
 import type { Show } from '@/types';
 import { useLazyImage } from '@/composables/useLazyImage';
 
@@ -22,10 +23,12 @@ const imageUrl = computed(() => props.show.image?.medium || '/poster-placeholder
 
 <template>
   <div class="show-slide">
-    <div class="show-slide__poster" ref="el">
-      <Image v-if="isVisible" :src="imageUrl" :alt="`${props.show.name} Poster`" />
-      <PosterPlaceholder v-else />
-    </div>
+    <RouterLink :to="`/show/${props.show.id}`">
+      <div class="show-slide__poster" ref="el">
+        <Image v-if="isVisible" :src="imageUrl" :alt="`${props.show.name} Poster`" />
+        <PosterPlaceholder v-else />
+      </div>
+    </RouterLink>
     <div class="show-slide__heading">
       <Heading size="md">{{ props.show.name }}</Heading>
       <Rating :rating="props.show.rating.average" />
@@ -49,8 +52,15 @@ const imageUrl = computed(() => props.show.image?.medium || '/poster-placeholder
   &__poster {
     width: 10rem;
     height: 15rem;
+    transition: var(--transition-out);
     border-radius: 0.5rem;
     overflow: hidden;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: var(--drop-shadow-strong);
+      transition: var(--transition-in);
+    }
 
     @include mixins.bp-md {
       width: 12.5rem;

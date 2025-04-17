@@ -8,4 +8,6 @@ export const GLOBAL = {
     MIRAGE_MEDIUM: '#1b3542',
     MIRAGE_DARK: '#16222a',
   },
+  RATING_MAX: 10,
+  STAR_RATING_MAX: 5,
 };

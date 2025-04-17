@@ -4,6 +4,8 @@ import { defineProps } from 'vue';
 import Icon from '../atoms/BaseIcon.vue';
 import { GLOBAL } from '@/utils/constants';
 
+const ICON_SIZE = 16;
+
 const props = defineProps({
   rating: {
     type: [Number, null],
@@ -14,10 +16,10 @@ const props = defineProps({
 
 <template>
   <div v-if="props.rating" class="star-rating">
-    <Icon icon="star" :size="16" :color="GLOBAL.COLORS.YELLOW" />
+    <Icon icon="star" :size="ICON_SIZE" :color="GLOBAL.COLORS.YELLOW" />
     <span>
       <strong>{{ props.rating }}</strong
-      >/10</span
+      >/{{ GLOBAL.RATING_MAX }}</span
     >
   </div>
 </template>

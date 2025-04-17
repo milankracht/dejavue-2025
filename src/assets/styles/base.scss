@@ -17,6 +17,7 @@
 
   --color-heading: var(--white);
   --color-text: var(--white);
+  --color-text-hover: var(--mirage-superlight);
   --color-logo: var(--mirage-superlight);
   --color-logo-hover: var(--white);
 
@@ -25,6 +26,7 @@
   --font-text: 'Sofia Sans Condensed', sans-serif;
 
   --drop-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --drop-shadow-strong: 0 4px 16px rgba(0, 0, 0, 0.5);
 
   --transition-in: all 0.3s ease-in-out;
   --transition-out: all 0.15s ease-in-out;
@@ -42,6 +44,8 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: linear-gradient(150deg, var(--mirage-light), var(--mirage-dark));
+  background-size: 100% 100vh;
+  background-attachment: fixed;
   line-height: 1.6;
   font-family: var(--font-text);
   font-size: 16px;
@@ -54,4 +58,21 @@ body {
 p {
   font-size: 1.25rem;
   text-align: left;
+}
+
+b,
+strong {
+  font-weight: 700;
+}
+
+a:link {
+  color: var(--color-text);
+}
+
+a:visited {
+  color: var(--mirage-superlight);
+}
+
+a:hover {
+  color: var(--color-text-hover);
 }

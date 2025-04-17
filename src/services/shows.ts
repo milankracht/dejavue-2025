@@ -7,7 +7,7 @@ export async function fetchAllShows() {
   return data;
 }
 
-export async function fetchShowById(id: number) {
+export async function fetchShowById(id: string) {
   const response = await fetch(`${BASE_URL}/shows/${id}`);
   if (!response.ok) throw new Error(`Failed to fetch show with ID ${id}`);
   return response.json();

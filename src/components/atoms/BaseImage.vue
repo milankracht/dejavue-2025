@@ -7,11 +7,15 @@ const props = defineProps<{
   width?: number;
   height?: number;
 }>();
-const { src, alt } = props;
 </script>
 
 <template>
-  <img :src="src" :alt="alt" :width="width ? width : `100%`" :height="height ? height : `100%`" />
+  <img
+    :src="props.src"
+    :alt="props.alt"
+    :width="props.width || '100%'"
+    :height="props.height || '100%'"
+  />
 </template>
 
 <style scoped lang="scss">

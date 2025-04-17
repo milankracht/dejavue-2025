@@ -120,7 +120,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: row;
   gap: 0.75rem;
-  padding: 0 0.75rem;
+  padding: 0.5rem 0.75rem;
   white-space: nowrap;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
