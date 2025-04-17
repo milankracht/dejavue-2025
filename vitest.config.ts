@@ -15,12 +15,8 @@ export default mergeConfig(
         reportsDirectory: './coverage',
         reporter: ['text', 'lcov', 'html'],
         all: true,
-        exclude: [
-          'node_modules/',
-          'dist/',
-          'e2e/',
-          'tests/helpers/', // eventueel extra folders
-        ],
+        include: ['src/**'],
+        exclude: ['node_modules/', 'dist/', 'e2e/', 'tests/helpers/'],
       },
     },
   }),
