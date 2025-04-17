@@ -16,11 +16,14 @@ const props = defineProps({
   },
 });
 
+const icons = import.meta.glob('@/assets/icons/*.svg');
+
 const iconComponent = computed(() => {
-  try {
-    return defineAsyncComponent(() => import(`@/assets/icons/${props.icon}.svg`));
-  } catch (err) {
-    console.warn(`Icon not found: ${props.icon}: ${err}`);
+  const path = `/src/assets/icons/${props.icon}.svg`;
+  if (icons[path]) {
+    return defineAsyncComponent(icons[path]);
+  } else {
+    console.warn(`Icon not found: ${props.icon}`);
     return null;
   }
 });
@@ -28,7 +31,7 @@ const iconComponent = computed(() => {
 
 <template>
   <div class="icon" :style="`width: ${props.size}px; height: ${props.size}px`">
-    <component :is="iconComponent" :style="`fill: ${props.color}`" />
+    <component :is="iconComponent" :name="props.icon" :style="`fill: ${props.color}`" />
   </div>
 </template>
 

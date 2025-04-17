@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils';
 import BaseButton from '../BaseButton.vue';
 import Icon from '../BaseIcon.vue';
 
-// Mock the Icon component to avoid dynamic import issues
 vi.mock('../BaseIcon.vue', () => ({
   default: {
     template: '<svg class="mock-icon"></svg>',
