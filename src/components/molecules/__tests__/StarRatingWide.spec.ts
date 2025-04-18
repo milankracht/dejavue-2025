@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import StarRatingWide from '../StarRatingWide.vue';
 import Icon from '@/components/atoms/BaseIcon.vue';
 import { GLOBAL } from '@/utils/constants';

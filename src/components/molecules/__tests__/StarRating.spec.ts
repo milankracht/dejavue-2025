@@ -1,6 +1,6 @@
 // filepath: /Users/milankracht/Sites/deja-vue/src/components/molecules/test_StarRating.vue
 import { mount } from '@vue/test-utils';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import StarRating from '../StarRating.vue';
 import Icon from '@/components/atoms/BaseIcon.vue';
 import { GLOBAL } from '@/utils/constants';

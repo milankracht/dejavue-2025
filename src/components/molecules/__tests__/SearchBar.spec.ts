@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import SearchBar from '../SearchBar.vue';
@@ -22,7 +22,7 @@ describe('SearchBar.vue', () => {
     });
   });
 
-  it('renders the TextInput and Button components', () => {
+  it('renders TextInput and Button components', () => {
     const wrapper = mount(SearchBar, {
       global: {
         components: {

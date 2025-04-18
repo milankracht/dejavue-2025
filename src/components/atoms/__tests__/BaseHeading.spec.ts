@@ -15,7 +15,7 @@ describe('BaseHeading.vue', () => {
 
     for (const [size, tag] of Object.entries(sizes)) {
       const wrapper = mount(BaseHeading, {
-        props: { size },
+        props: { size: size as 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' },
         slots: { default: 'Test Heading' },
       });
       expect(wrapper.element.tagName.toLowerCase()).toBe(tag);

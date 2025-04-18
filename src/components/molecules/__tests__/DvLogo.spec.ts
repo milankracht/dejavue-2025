@@ -15,7 +15,7 @@ describe('DvLogo.vue', () => {
     expect(wrapper.text()).toBe('DéjaVue');
   });
 
-  it('renders a RouterLink with the correct "to" attribute', () => {
+  it('renders a RouterLink with correct to attribute', () => {
     const wrapper = mount(DvLogo, {
       global: {
         stubs: {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue';
 
+import { GLOBAL } from '@/utils/constants';
+
 const props = defineProps({
   icon: {
     type: String,
@@ -12,7 +14,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: '#ffffff',
+    default: GLOBAL.COLORS.WHITE,
   },
 });
 

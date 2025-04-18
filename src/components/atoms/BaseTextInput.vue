@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { defineProps, ref, watch } from 'vue';
 
+const DEBOUNCE_TIME = 300;
+
 const emit = defineEmits(['handleChange']);
 
 const props = defineProps({
@@ -24,7 +26,7 @@ const debouncedEmit = (event: Event) => {
 
   debounceTimeout = setTimeout(() => {
     emit('handleChange', inputValue.value);
-  }, 300);
+  }, DEBOUNCE_TIME);
 };
 
 watch(

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
 import BaseIcon from '../BaseIcon.vue';
+import { GLOBAL } from '@/utils/constants';
 
 vi.mock('@/assets/icons/test-icon.svg', () => ({
   default: { name: 'test-icon' },
@@ -41,7 +42,7 @@ describe('BaseIcon.vue', () => {
     expect(iconDiv.attributes('style')).toContain('width: 24px; height: 24px');
 
     const svgComponent = wrapper.findComponent({ name: 'test-icon' });
-    expect(svgComponent.attributes('style')).toContain('fill: #ffffff');
+    expect(svgComponent.attributes('style')).toContain(`fill: ${GLOBAL.COLORS.WHITE}`);
   });
 
   it('warns when the icon is not found', () => {

@@ -14,7 +14,7 @@ describe('BaseTextInput.vue', () => {
     expect(input.element.value).toBe('Initial Value');
   });
 
-  it('emits "handleChange" with the correct value after debounce', async () => {
+  it('emits handleChange with the correct value after debounce', async () => {
     vi.useFakeTimers();
 
     const wrapper = mount(BaseTextInput, {
@@ -34,7 +34,7 @@ describe('BaseTextInput.vue', () => {
     vi.useRealTimers();
   });
 
-  it('updates the input value when the "value" prop changes', async () => {
+  it('updates the input value when the value prop changes', async () => {
     const wrapper = mount(BaseTextInput, {
       props: {
         value: 'Initial Value',
