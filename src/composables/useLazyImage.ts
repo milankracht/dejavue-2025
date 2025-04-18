@@ -2,7 +2,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 export function useLazyImage() {
   const isVisible = ref(false);
-  const el = ref(null);
+  const el = ref<HTMLElement | null>(null);
 
   let observer: IntersectionObserver | null;
 
