@@ -9,7 +9,7 @@ export const mockShow: Show = {
   genres: ['Drama', 'Comedy'],
   status: 'Running',
   runtime: 60,
-  averageRuntime: 60, // Added averageRuntime
+  averageRuntime: 60,
   premiered: '2023-01-01',
   ended: '2025-01-01',
   officialSite: 'https://example.com',
