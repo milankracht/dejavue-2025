@@ -3,12 +3,9 @@ import { defineProps } from 'vue';
 
 import DataListItem from '@/components/molecules/DataListItem.vue';
 
-const props = defineProps({
-  items: {
-    type: Array,
-    required: true,
-  },
-});
+const props = defineProps<{
+  items: { label: string; value: string }[];
+}>();
 </script>
 
 <template>
