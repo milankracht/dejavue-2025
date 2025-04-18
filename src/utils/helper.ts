@@ -1,5 +1,6 @@
 export function readableDate(dateString: string | null | undefined): string {
   if (!dateString) return 'Unknown';
+  if (isNaN(Date.parse(dateString))) return 'Unknown';
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',

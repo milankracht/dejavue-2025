@@ -35,7 +35,7 @@ const setGenres = (shows: Show[]) => {
 const getShowsByGenre = (genre: string) => {
   return state.shows
     .filter((show) => show.genres.includes(genre))
-    .sort((a, b) => b.rating.average - a.rating.average);
+    .sort((a, b) => (b.rating.average ?? 0) - (a.rating.average ?? 0));
 };
 
 export default {
