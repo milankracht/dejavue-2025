@@ -117,6 +117,6 @@ describe('ShowSlide.vue', () => {
     });
 
     const rating = wrapper.find('.star-rating');
-    expect(rating.text()).toBe(`${String(mockShow.rating.average)}/10`); // Ensure the rating is rendered correctly
+    expect(rating.text()).toBe(`${String(mockShow.rating.average)}/10`);
   });
 });

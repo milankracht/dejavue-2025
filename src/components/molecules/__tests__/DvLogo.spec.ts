@@ -1,15 +1,18 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
 import DvLogo from '../DvLogo.vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, createRouter, createWebHistory } from 'vue-router';
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [{ path: '/', component: { template: '<div>Home</div>' } }],
+});
 
 describe('DvLogo.vue', () => {
-  it.skip('renders the logo text correctly', () => {
+  it('renders the logo text correctly', () => {
     const wrapper = mount(DvLogo, {
       global: {
-        stubs: {
-          RouterLink: true,
-        },
+        plugins: [router],
       },
     });
     expect(wrapper.text()).toBe('DéjaVue');
@@ -18,9 +21,7 @@ describe('DvLogo.vue', () => {
   it('renders a RouterLink with correct to attribute', () => {
     const wrapper = mount(DvLogo, {
       global: {
-        stubs: {
-          RouterLink: true,
-        },
+        plugins: [router],
       },
     });
 

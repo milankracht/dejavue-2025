@@ -1,17 +1,20 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
+import flushPromises from 'flush-promises';
 import BaseIcon from '../BaseIcon.vue';
-import { GLOBAL } from '@/utils/constants';
 
-vi.mock('@/assets/icons/test-icon.svg', () => ({
-  default: { name: 'test-icon' },
-}));
-vi.mock('@/assets/icons/another-icon.svg', () => ({
-  default: { name: 'another-icon' },
+vi.mock('@/utils/icons', () => ({
+  icons: {
+    '/src/assets/icons/test-icon.svg': () =>
+      Promise.resolve({
+        name: 'MockTestIcon',
+        template: '<svg data-testid="mock-icon" style="fill: #ff0000" />',
+      }),
+  },
 }));
 
 describe('BaseIcon.vue', () => {
-  it.skip('renders the icon with the correct size and color', async () => {
+  it('renders the icon with the correct size and color', async () => {
     const wrapper = mount(BaseIcon, {
       props: {
         icon: 'test-icon',
@@ -20,43 +23,30 @@ describe('BaseIcon.vue', () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
-    const iconDiv = wrapper.find('.icon');
-    expect(iconDiv.attributes('style')).toContain('width: 32px; height: 32px');
-
-    const svgComponent = wrapper.findComponent({ name: 'test-icon' });
-    expect(svgComponent.attributes('style')).toContain('fill: #ff0000');
+    const svg = wrapper.find('[data-testid="icon"]');
+    expect(svg.exists()).toBe(true);
+    expect(svg.attributes('style')).toContain('fill: #ff0000');
   });
 
-  it.skip('renders a default size and color when not provided', async () => {
-    const wrapper = mount(BaseIcon, {
-      props: {
-        icon: 'test-icon',
-      },
-    });
-
-    await wrapper.vm.$nextTick();
-
-    const iconDiv = wrapper.find('.icon');
-    expect(iconDiv.attributes('style')).toContain('width: 24px; height: 24px');
-
-    const svgComponent = wrapper.findComponent({ name: 'test-icon' });
-    expect(svgComponent.attributes('style')).toContain(`fill: ${GLOBAL.COLORS.WHITE}`);
-  });
-
-  it('warns when the icon is not found', () => {
+  it('warns when the icon is not found and does not render a component', async () => {
     const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    mount(BaseIcon, {
+    const wrapper = mount(BaseIcon, {
       props: {
         icon: 'non-existent-icon',
       },
     });
 
+    await flushPromises();
+
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       expect.stringContaining('Icon not found: non-existent-icon'),
     );
+
+    const svg = wrapper.find('[data-testid="icon"]');
+    expect(svg.exists()).toBe(false);
 
     consoleWarnSpy.mockRestore();
   });

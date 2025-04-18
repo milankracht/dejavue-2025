@@ -1,24 +1,12 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue';
-
-import { GLOBAL } from '@/utils/constants';
+import { icons } from '@/utils/icons';
 
 const props = defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
-  size: {
-    type: [Number, String],
-    default: 24,
-  },
-  color: {
-    type: String,
-    default: GLOBAL.COLORS.WHITE,
-  },
+  icon: { type: String, required: true },
+  size: { type: [Number, String], default: 24 },
+  color: { type: String, default: '#ffffff' },
 });
-
-const icons = import.meta.glob('@/assets/icons/*.svg');
 
 const iconComponent = computed(() => {
   const path = `/src/assets/icons/${props.icon}.svg`;
@@ -35,7 +23,12 @@ const iconComponent = computed(() => {
 
 <template>
   <div class="icon" :style="`width: ${props.size}px; height: ${props.size}px`">
-    <component :is="iconComponent" :name="props.icon" :style="`fill: ${props.color}`" />
+    <component
+      v-if="iconComponent"
+      :is="iconComponent"
+      :style="`fill: ${props.color}`"
+      data-testid="icon"
+    />
   </div>
 </template>
 
