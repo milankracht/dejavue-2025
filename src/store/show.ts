@@ -11,6 +11,7 @@ const state = reactive<{
 });
 
 const loadShows = async () => {
+  if (state.shows.length > 0) return;
   try {
     const shows = await fetchAllShows();
     setShows(shows);
