@@ -3,14 +3,12 @@ import { createMemoryHistory, createRouter } from 'vue-router';
 import router from '@/router';
 import navigationHistory from '@/store/navigationHistory';
 
-// Mock views (in echte tests zou je mocks of testcomponenten gebruiken)
 vi.mock('@/views/HomeView.vue', () => ({ default: { name: 'HomeView' } }));
 vi.mock('@/views/ShowView.vue', () => ({ default: { name: 'ShowView' } }));
 vi.mock('@/views/SearchView.vue', () => ({ default: { name: 'SearchView' } }));
 
 describe('Vue Router', () => {
   beforeEach(() => {
-    // Reset navigation history before each test
     navigationHistory.state.navigationStack = [];
   });
 
