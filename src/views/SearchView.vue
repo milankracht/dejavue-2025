@@ -3,7 +3,7 @@ import { onMounted, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { searchShows } from '@/services/shows';
 import type { SearchResult } from '@/types';
-import { useNavigationHistory } from '@/composables/useNavigationHistory';
+import navigationHistory from '@/store/navigationHistory';
 
 import Heading from '@/components/atoms/BaseHeading.vue';
 import Button from '@/components/atoms/BaseButton.vue';
@@ -11,7 +11,6 @@ import Slide from '@/components/molecules/ShowSlide.vue';
 
 const route = useRoute();
 const router = useRouter();
-const nav = useNavigationHistory();
 
 const state = reactive<{
   results: SearchResult[];
@@ -20,7 +19,7 @@ const state = reactive<{
 });
 
 const toPreviousView = () => {
-  const last = nav.last()?.path?.toString() || '/';
+  const last = navigationHistory.lastRoute()?.path?.toString() || '/';
   router.push(last);
 };
 

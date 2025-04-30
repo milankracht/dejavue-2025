@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useNavigationHistory } from '@/composables/useNavigationHistory';
+import navigationHistory from '@/store/navigationHistory';
 
 import HomeView from '../views/HomeView.vue';
 import ShowView from '@/views/ShowView.vue';
@@ -27,14 +27,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const nav = useNavigationHistory();
-
-  const lastPath: string = nav.last().path?.toString() || '/';
+  const lastPath: string = navigationHistory.lastRoute().path?.toString() || '/';
 
   if (to.fullPath === lastPath) {
-    nav.pop();
+    navigationHistory.removeLastRoute();
   } else if (to.name !== from.name) {
-    nav.push(from.fullPath);
+    navigationHistory.addRoute(from.fullPath);
   }
 
   next();

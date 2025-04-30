@@ -5,7 +5,7 @@ import { fetchShowById } from '@/services/shows';
 import type { Show } from '@/types';
 import { readableDate, hyperlink } from '@/utils/helper';
 import DOMPurify from 'dompurify';
-import { useNavigationHistory } from '@/composables/useNavigationHistory';
+import navigationHistory from '@/store/navigationHistory';
 
 import Heading from '@/components/atoms/BaseHeading.vue';
 import Button from '@/components/atoms/BaseButton.vue';
@@ -16,7 +16,6 @@ import DataList from '@/components/organisms/DataList.vue';
 
 const route = useRoute();
 const router = useRouter();
-const nav = useNavigationHistory();
 const showId = route.params.id as string;
 
 const showDetails = ref<Show | null>(null);
@@ -50,7 +49,7 @@ const listData = computed(() => {
 });
 
 const toPreviousView = () => {
-  const last = nav.last()?.path?.toString() || '/';
+  const last = navigationHistory.lastRoute()?.path?.toString() || '/';
   router.push(last);
 };
 

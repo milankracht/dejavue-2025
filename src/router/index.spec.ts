@@ -1,78 +1,81 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { useNavigationHistory } from '@/composables/useNavigationHistory';
-import router from './index';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createMemoryHistory, createRouter } from 'vue-router';
+import router from '@/router';
+import navigationHistory from '@/store/navigationHistory';
 
-vi.mock('vue-router', () => ({
-  createRouter: vi.fn(() => ({
-    options: {
-      routes: [
-        { path: '/', name: 'home', component: {} },
-        { path: '/show/:id', name: 'show', component: {} },
-        { path: '/search', name: 'search', component: {} },
-      ],
-    },
-    beforeEach: vi.fn(),
-  })),
-  createWebHistory: vi.fn(),
-}));
+// Mock views (in echte tests zou je mocks of testcomponenten gebruiken)
+vi.mock('@/views/HomeView.vue', () => ({ default: { name: 'HomeView' } }));
+vi.mock('@/views/ShowView.vue', () => ({ default: { name: 'ShowView' } }));
+vi.mock('@/views/SearchView.vue', () => ({ default: { name: 'SearchView' } }));
 
-vi.mock('@/composables/useNavigationHistory', () => ({
-  useNavigationHistory: vi.fn(),
-}));
-
-describe('Router', () => {
+describe('Vue Router', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    // Reset navigation history before each test
+    navigationHistory.state.navigationStack = [];
   });
 
-  it('should configure routes correctly', () => {
-    const routes = router.options.routes;
-    expect(routes).toEqual([
-      { path: '/', name: 'home', component: expect.anything() },
-      { path: '/show/:id', name: 'show', component: expect.anything() },
-      { path: '/search', name: 'search', component: expect.anything() },
-    ]);
+  it('should have the correct routes', () => {
+    const routeNames = router.getRoutes().map((route) => route.name);
+    expect(routeNames).toContain('home');
+    expect(routeNames).toContain('show');
+    expect(routeNames).toContain('search');
   });
 
-  it('should call nav.pop() when navigating to the last path', async () => {
-    const mockNav = {
-      last: vi.fn(() => ({ path: '/search' })),
-      pop: vi.fn(),
-      push: vi.fn(),
-    };
-    (useNavigationHistory as vi.Mock).mockReturnValue(mockNav);
+  it('should push previous route to navigation stack', async () => {
+    await router.push('/');
+    await router.isReady();
 
-    const next = vi.fn();
-    const mockBeforeEach = router.beforeEach as vi.Mock;
-    interface NavigationHistory {
-      last: () => { path: string };
-      pop: () => void;
-      push: (path: string) => void;
-    }
+    navigationHistory.state.navigationStack = [];
 
-    interface Route {
-      fullPath: string;
-      name?: string;
-    }
+    await router.push('/search');
 
-    type NextFunction = () => void;
+    expect(navigationHistory.state.navigationStack).toContainEqual({ path: '/' });
+  });
 
-    mockBeforeEach.mockImplementation(async (to: Route, from: Route, nextFn: NextFunction) => {
-      const nav: NavigationHistory = useNavigationHistory();
-      const lastPath: string = nav.last().path?.toString() || '/';
-      if (to.fullPath === lastPath) {
-        nav.pop();
-      } else if (to.name !== from.name) {
-        nav.push(from.fullPath);
-      }
-      nextFn();
-    });
+  it('should not push the same route again', async () => {
+    const localRouter = createTestRouter();
+    navigationHistory.state.navigationStack = [];
 
-    await mockBeforeEach({ fullPath: '/search' }, { fullPath: '/home' }, next);
+    await localRouter.push('/');
+    await localRouter.push('/');
 
-    expect(mockNav.last).toHaveBeenCalled();
-    expect(mockNav.pop).toHaveBeenCalled();
-    expect(mockNav.push).not.toHaveBeenCalled();
-    expect(next).toHaveBeenCalled();
+    expect(navigationHistory.state.navigationStack.length).toBe(0);
+  });
+
+  it('should remove last route if navigating to the same path as last pushed route', async () => {
+    const localRouter = createTestRouter();
+    navigationHistory.state.navigationStack = [];
+
+    await localRouter.push('/');
+    await localRouter.push('/show/888');
+    await localRouter.push('/search');
+
+    expect(navigationHistory.state.navigationStack.length).toBe(2);
+
+    await localRouter.push('/show/888');
+
+    expect(navigationHistory.state.navigationStack.length).toBe(1);
+    expect(navigationHistory.state.navigationStack).toEqual([{ path: '/' }]);
   });
 });
+
+function createTestRouter() {
+  const localRouter = createRouter({
+    history: createMemoryHistory(),
+    routes: router.getRoutes(),
+  });
+
+  localRouter.beforeEach((to, from, next) => {
+    const lastPath: string = navigationHistory.lastRoute().path?.toString() || '/';
+
+    if (to.fullPath === lastPath) {
+      navigationHistory.removeLastRoute();
+    } else if (to.name !== from.name) {
+      navigationHistory.addRoute(from.fullPath);
+    }
+
+    next();
+  });
+
+  return localRouter;
+}
